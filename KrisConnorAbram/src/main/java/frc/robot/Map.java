@@ -25,8 +25,8 @@ public class Map {
     public static CANCoder can3 = new CANCoder(11);
     public static CANCoder can4 = new CANCoder(12);
 
-    public static double offset1 = 120.1 + 90;
-    public static double offset2 = 15.8 + 90;
+    public static double offset1 = 116.7 + 90;
+    public static double offset2 = 15.4 + 90;
     public static double offset3 = 200.1 + 90;
     public static double offset4 = 238.7 + 90;
 
@@ -35,5 +35,6 @@ public class Map {
     public static XboxController driver = new XboxController(0);
     
     public static double initialAngle = 0;
+    public static double straightAngle = 0;
 }
 

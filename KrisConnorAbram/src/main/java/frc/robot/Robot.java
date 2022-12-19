@@ -38,7 +38,14 @@ public class Robot extends TimedRobot {
   {
     double x = Map.driver.getRawAxis(0);
     double y = Map.driver.getRawAxis(1);
-    Drive.strafe(Math.sqrt(x*x+y*y), ((180 + (Math.atan2(y, -x) / (Math.PI) * 180)+Map.initialAngle)-Map.gyro.getYaw()), Map.driver.getRawAxis(4));
+    double xyHyp = 180 + (Math.atan2(y, -x) / (Math.PI) * 180);
+    double twist = Map.driver.getRawAxis(4);
+    double gyroPos = Map.gyro.getYaw();
+    Drive.strafe(Math.sqrt(x*x+y*y), (xyHyp+Map.initialAngle-gyroPos), twist-(Map.straightAngle-gyroPos) / 20);
+
+    if (Map.driver.getRawButton(6)) {
+      Map.initialAngle = gyroPos;
+    }
   }
 
   @Override

@@ -26,20 +26,36 @@ public class Drive
         double[] driveVector2 = addArray(strafeVector, rotateVector2);
         double[] driveVector3 = addArray(strafeVector, rotateVector3);
         double[] driveVector4 = addArray(strafeVector, rotateVector4);
-        
+
+        SmartDashboard.putNumber("can1pos", Map.can1.getAbsolutePosition());
+        SmartDashboard.putNumber("can2pos", Map.can2.getAbsolutePosition());
+        SmartDashboard.putNumber("can3pos", Map.can3.getAbsolutePosition());
+        SmartDashboard.putNumber("can4pos", Map.can4.getAbsolutePosition());
+        SmartDashboard.putNumber("target1angle", angle + Map.offset1);
+
+        if (Math.abs(rotation) > 0.2) {
+            Map.straightAngle = Map.gyro.getYaw();
+        }
 
         if (mag > 0.2 || Math.abs(rotation) > 0.2)
         {
+            mag = mag - 0.2;
+            if (rotation > 0) {
+                rotation = rotation - 0.2;
+            } else {
+                rotation = rotation + 0.2;
+            }
+
             Map.drive1.set(ControlMode.PercentOutput, (driveVector1[0] * elOptimal(driveVector1[1], currentAngle1)[1])*0.5);
             Map.drive2.set(ControlMode.PercentOutput, (driveVector2[0] * elOptimal(driveVector2[1], currentAngle2)[1])*0.5);
             Map.drive3.set(ControlMode.PercentOutput, (driveVector3[0] * elOptimal(driveVector3[1], currentAngle3)[1])*0.5);
             Map.drive4.set(ControlMode.PercentOutput, (driveVector4[0] * elOptimal(driveVector4[1], currentAngle4)[1])*0.5);
 
 
-            Map.rotate1.set(ControlMode.PercentOutput, elOptimal(driveVector1[1], currentAngle1)[0] /275);
-            Map.rotate2.set(ControlMode.PercentOutput, elOptimal(driveVector2[1], currentAngle2)[0] /275);
-            Map.rotate3.set(ControlMode.PercentOutput, elOptimal(driveVector3[1], currentAngle3)[0] /275);
-            Map.rotate4.set(ControlMode.PercentOutput, elOptimal(driveVector4[1], currentAngle4)[0] /275);
+            Map.rotate1.set(ControlMode.PercentOutput, elOptimal(driveVector1[1], currentAngle1)[0] / 138.4);
+            Map.rotate2.set(ControlMode.PercentOutput, elOptimal(driveVector2[1], currentAngle2)[0] / 138.4);
+            Map.rotate3.set(ControlMode.PercentOutput, elOptimal(driveVector3[1], currentAngle3)[0] / 138.4);
+            Map.rotate4.set(ControlMode.PercentOutput, elOptimal(driveVector4[1], currentAngle4)[0] / 138.4);
             
         }
            
@@ -57,10 +73,6 @@ public class Drive
             Map.rotate4.set(ControlMode.PercentOutput, 0);
 
         }
-
-        SmartDashboard.putNumber("currentAngle", currentAngle1);
-        SmartDashboard.putNumber("targetAngle", angle);
-        SmartDashboard.putNumber("rotation %", (currentAngle1 - angle) / 1000);
 
     }
 
