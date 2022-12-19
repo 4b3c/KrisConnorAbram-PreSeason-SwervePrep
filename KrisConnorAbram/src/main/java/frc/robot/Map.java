@@ -33,6 +33,8 @@ public class Map {
     public static PigeonIMU gyro = new PigeonIMU(0);
 
     public static XboxController driver = new XboxController(0);
+
+    public static double deadBand = 0.2;
     
     public static double initialAngle = 0;
     public static double straightAngle = 0;

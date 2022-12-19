@@ -1,27 +1,39 @@
 package frc.robot;
-
 import com.ctre.phoenix.motorcontrol.ControlMode;
-
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class Drive
-{
-    public static void strafe(double mag, double angle, double rotation)
-    {
+public class Drive {
+
+    public static void strafe(double mag, double angle, double rotation) {
+
         double currentAngle1 = Map.can1.getAbsolutePosition()- Map.offset1;
-        if(currentAngle1<0){currentAngle1 = currentAngle1+360;} 
-        double currentAngle2 = Map.can2.getAbsolutePosition()- Map.offset2; 
-        if(currentAngle2<0){currentAngle2 = currentAngle2+360;} 
-        double currentAngle3 = Map.can3.getAbsolutePosition()- Map.offset3; 
-        if(currentAngle3<0){currentAngle3 = currentAngle3+360;} 
+        double currentAngle2 = Map.can2.getAbsolutePosition()- Map.offset2;
+        double currentAngle3 = Map.can3.getAbsolutePosition()- Map.offset3;
         double currentAngle4 = Map.can4.getAbsolutePosition()- Map.offset4; 
-        if(currentAngle4<0){currentAngle4 = currentAngle4+360;}
+
+        if (currentAngle1<0) {
+            currentAngle1 = currentAngle1+360;
+        }
+
+        if (currentAngle2<0) {
+            currentAngle2 = currentAngle2+360;
+        }
+
+        if (currentAngle3<0) {
+            currentAngle3 = currentAngle3+360;
+        }
+
+        if (currentAngle4<0) {
+            currentAngle4 = currentAngle4+360;
+        }
 
         double[] rotateVector1 = {rotation, 45 + 90};
         double[] rotateVector2 = {rotation, 45 + 180};
         double[] rotateVector3 = {rotation, 45};
         double[] rotateVector4 = {rotation, 45 + 270};
+
         double[] strafeVector = {mag, angle};
+
         double[] driveVector1 = addArray(strafeVector, rotateVector1);
         double[] driveVector2 = addArray(strafeVector, rotateVector2);
         double[] driveVector3 = addArray(strafeVector, rotateVector3);
@@ -33,17 +45,18 @@ public class Drive
         SmartDashboard.putNumber("can4pos", Map.can4.getAbsolutePosition());
         SmartDashboard.putNumber("target1angle", angle + Map.offset1);
 
-        if (Math.abs(rotation) > 0.2) {
+        if (Math.abs(rotation) > Map.deadBand) {
             Map.straightAngle = Map.gyro.getYaw();
         }
 
-        if (mag > 0.2 || Math.abs(rotation) > 0.2)
-        {
-            mag = mag - 0.2;
+        if (mag > Map.deadBand || Math.abs(rotation) > Map.deadBand) {
+            mag = mag - Map.deadBand;
+
             if (rotation > 0) {
-                rotation = rotation - 0.2;
+                rotation = rotation - Map.deadBand;
+
             } else {
-                rotation = rotation + 0.2;
+                rotation = rotation + Map.deadBand;
             }
 
             Map.drive1.set(ControlMode.PercentOutput, (driveVector1[0] * elOptimal(driveVector1[1], currentAngle1)[1])*0.5);
@@ -51,21 +64,16 @@ public class Drive
             Map.drive3.set(ControlMode.PercentOutput, (driveVector3[0] * elOptimal(driveVector3[1], currentAngle3)[1])*0.5);
             Map.drive4.set(ControlMode.PercentOutput, (driveVector4[0] * elOptimal(driveVector4[1], currentAngle4)[1])*0.5);
 
-
-            Map.rotate1.set(ControlMode.PercentOutput, elOptimal(driveVector1[1], currentAngle1)[0] / 138.4);
-            Map.rotate2.set(ControlMode.PercentOutput, elOptimal(driveVector2[1], currentAngle2)[0] / 138.4);
-            Map.rotate3.set(ControlMode.PercentOutput, elOptimal(driveVector3[1], currentAngle3)[0] / 138.4);
-            Map.rotate4.set(ControlMode.PercentOutput, elOptimal(driveVector4[1], currentAngle4)[0] / 138.4);
+            Map.rotate1.set(ControlMode.PercentOutput, elOptimal(driveVector1[1], currentAngle1)[0] / 168.4);
+            Map.rotate2.set(ControlMode.PercentOutput, elOptimal(driveVector2[1], currentAngle2)[0] / 168.4);
+            Map.rotate3.set(ControlMode.PercentOutput, elOptimal(driveVector3[1], currentAngle3)[0] / 168.4);
+            Map.rotate4.set(ControlMode.PercentOutput, elOptimal(driveVector4[1], currentAngle4)[0] / 168.4);
             
-        }
-           
-        else
-        {
+        } else {
             Map.drive1.set(ControlMode.PercentOutput, 0);
             Map.drive2.set(ControlMode.PercentOutput, 0);
             Map.drive3.set(ControlMode.PercentOutput, 0);
             Map.drive4.set(ControlMode.PercentOutput, 0);
-
 
             Map.rotate1.set(ControlMode.PercentOutput, 0);
             Map.rotate2.set(ControlMode.PercentOutput, 0);
@@ -82,27 +90,37 @@ public class Drive
 
         double diff = currentAngle - targetAngle;
         double posDiff = Math.abs(diff);
+
         if (posDiff < 90) {
             diffAndReverse[0] = diff;
+
             return diffAndReverse;
         
         } else if (posDiff < 270) {
+
             if (diff > 0) {
                 diffAndReverse[0] = diff - 180;
                 diffAndReverse[1] = -1;
+
                 return diffAndReverse;
+
             } else {
                 diffAndReverse[0] = diff + 180;
                 diffAndReverse[1] = -1;
+
                 return diffAndReverse;
             }
         
         } else {
+
             if (diff > 0) {
                 diffAndReverse[0] = diff - 360;
+
                 return diffAndReverse;
+
             } else {
                 diffAndReverse[0] = diff + 360;
+
                 return diffAndReverse;
             }
             
@@ -111,9 +129,9 @@ public class Drive
     }
 
     public static double[] addArray(double[] arr1, double[] arr2) {
-        double[] resultingVector = {0, 0};
         double magnitudeOne = arr1[0];
         double angleOne = arr1[1];
+
         double magnitudeTwo = arr2[0];
         double angleTwo = arr2[1];
 
@@ -123,8 +141,7 @@ public class Drive
         double newAngle = toDegrees(Math.atan2(newY, newX));
         double newMag = Math.sqrt((newX*newX) + (newY*newY));
 
-        resultingVector[0] = newMag;
-        resultingVector[1] = newAngle;
+        double[] resultingVector = {newMag, newAngle};
 
         return resultingVector;
     }
