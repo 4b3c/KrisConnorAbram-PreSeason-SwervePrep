@@ -18,8 +18,9 @@ public class Robot extends TimedRobot {
    * initialization code.
    */
   @Override
-  public void robotInit() {}
-
+  public void robotInit() {
+  Map.initialAngle = Map.gyro.getYaw();
+}
   @Override
   public void robotPeriodic() {}
 
@@ -37,7 +38,7 @@ public class Robot extends TimedRobot {
   {
     double x = Map.driver.getRawAxis(0);
     double y = Map.driver.getRawAxis(1);
-    Drive.strafe(Math.sqrt(x*x+y*y), (180 + (Math.atan2(y, -x) / (Math.PI) * 180)));
+    Drive.strafe(Math.sqrt(x*x+y*y), ((180 + (Math.atan2(y, -x) / (Math.PI) * 180)+Map.initialAngle)-Map.gyro.getYaw()), Map.driver.getRawAxis(4));
   }
 
   @Override

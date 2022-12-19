@@ -34,5 +34,6 @@ public class Map {
 
     public static XboxController driver = new XboxController(0);
     
+    public static double initialAngle = 0;
 }
 
