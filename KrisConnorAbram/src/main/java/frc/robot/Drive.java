@@ -4,45 +4,61 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Drive {
 
+    static double[] rotateVector1 = {0, 45 + 90};
+    static double[] rotateVector2 = {0, 45 + 180};
+    static double[] rotateVector3 = {0, 45};
+    static double[] rotateVector4 = {0, 45 + 270};
+
+    static double[] driveVector1;
+    static double[] driveVector2;
+    static double[] driveVector3;
+    static double[] driveVector4;
+
+    static double currentAngle1;
+    static double currentAngle2;
+    static double currentAngle3;
+    static double currentAngle4;
+
     public static void strafe(double mag, double angle, double rotation) {
-
-        double currentAngle1 = Map.can1.getAbsolutePosition()- Map.offset1;
-        double currentAngle2 = Map.can2.getAbsolutePosition()- Map.offset2;
-        double currentAngle3 = Map.can3.getAbsolutePosition()- Map.offset3;
-        double currentAngle4 = Map.can4.getAbsolutePosition()- Map.offset4; 
-
-        if (currentAngle1<0) {
-            currentAngle1 = currentAngle1+360;
-        }
-
-        if (currentAngle2<0) {
-            currentAngle2 = currentAngle2+360;
-        }
-
-        if (currentAngle3<0) {
-            currentAngle3 = currentAngle3+360;
-        }
-
-        if (currentAngle4<0) {
-            currentAngle4 = currentAngle4+360;
-        }
-
-        double[] rotateVector1 = {rotation, 45 + 90};
-        double[] rotateVector2 = {rotation, 45 + 180};
-        double[] rotateVector3 = {rotation, 45};
-        double[] rotateVector4 = {rotation, 45 + 270};
 
         double[] strafeVector = {mag, angle};
 
-        double[] driveVector1 = addArray(strafeVector, rotateVector1);
-        double[] driveVector2 = addArray(strafeVector, rotateVector2);
-        double[] driveVector3 = addArray(strafeVector, rotateVector3);
-        double[] driveVector4 = addArray(strafeVector, rotateVector4);
+        currentAngle1 = Map.can1.getAbsolutePosition() - Map.offset1;
+        currentAngle2 = Map.can2.getAbsolutePosition() - Map.offset2;
+        currentAngle3 = Map.can3.getAbsolutePosition() - Map.offset3;
+        currentAngle4 = Map.can4.getAbsolutePosition() - Map.offset4; 
+
+        if (currentAngle1<0) {
+            currentAngle1 = currentAngle1 + 360;
+        }
+
+        if (currentAngle2<0) {
+            currentAngle2 = currentAngle2 + 360;
+        }
+
+        if (currentAngle3<0) {
+            currentAngle3 = currentAngle3 + 360;
+        }
+
+        if (currentAngle4<0) {
+            currentAngle4 = currentAngle4 + 360;
+        }
+
+        rotateVector1[0] = rotation;
+        rotateVector2[0] = rotation;
+        rotateVector3[0] = rotation;
+        rotateVector4[0] = rotation;
+
+        driveVector1 = addArray(strafeVector, rotateVector1);
+        driveVector2 = addArray(strafeVector, rotateVector2);
+        driveVector3 = addArray(strafeVector, rotateVector3);
+        driveVector4 = addArray(strafeVector, rotateVector4);
 
         SmartDashboard.putNumber("can1pos", Map.can1.getAbsolutePosition());
         SmartDashboard.putNumber("can2pos", Map.can2.getAbsolutePosition());
         SmartDashboard.putNumber("can3pos", Map.can3.getAbsolutePosition());
         SmartDashboard.putNumber("can4pos", Map.can4.getAbsolutePosition());
+
         SmartDashboard.putNumber("target1angle", angle + Map.offset1);
 
         if (Math.abs(rotation) > Map.deadBand) {
@@ -97,7 +113,6 @@ public class Drive {
             return diffAndReverse;
         
         } else if (posDiff < 270) {
-
             if (diff > 0) {
                 diffAndReverse[0] = diff - 180;
                 diffAndReverse[1] = -1;
@@ -112,7 +127,6 @@ public class Drive {
             }
         
         } else {
-
             if (diff > 0) {
                 diffAndReverse[0] = diff - 360;
 
@@ -139,7 +153,7 @@ public class Drive {
         double newY = (magnitudeOne * Math.sin(toRadians(angleOne))) + (magnitudeTwo * Math.sin(toRadians(angleTwo)));
 
         double newAngle = toDegrees(Math.atan2(newY, newX));
-        double newMag = Math.sqrt((newX*newX) + (newY*newY));
+        double newMag = Math.sqrt((newX*newX) + (newY * newY));
 
         double[] resultingVector = {newMag, newAngle};
 

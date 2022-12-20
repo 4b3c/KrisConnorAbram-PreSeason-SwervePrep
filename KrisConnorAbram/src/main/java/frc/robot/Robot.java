@@ -17,6 +17,12 @@ public class Robot extends TimedRobot {
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
    */
+  double x;
+  double y;
+  double xyHyp;
+  double twist;
+  double gyroPos;
+
   @Override
   public void robotInit() {
   Map.initialAngle = Map.gyro.getYaw();
@@ -36,12 +42,12 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic()
   {
-    double x = Map.driver.getRawAxis(0);
-    double y = Map.driver.getRawAxis(1);
-    double xyHyp = 180 + (Math.atan2(y, -x) / (Math.PI) * 180);
-    double twist = Map.driver.getRawAxis(4);
-    double gyroPos = Map.gyro.getYaw();
-    Drive.strafe(Math.sqrt(x*x+y*y), (xyHyp+Map.initialAngle-gyroPos), twist-(Map.straightAngle-gyroPos) / 20);
+    x = Map.driver.getRawAxis(0);
+    y = Map.driver.getRawAxis(1);
+    xyHyp = 180 + (Math.atan2(y, -x) / (Math.PI) * 180);
+    twist = Map.driver.getRawAxis(4);
+    gyroPos = Map.gyro.getYaw();
+    Drive.strafe(Math.sqrt(x * x + y * y), (xyHyp+Map.initialAngle - gyroPos), twist - (Map.straightAngle - gyroPos) / 20);
 
     if (Map.driver.getRawButton(6)) {
       Map.initialAngle = gyroPos;
