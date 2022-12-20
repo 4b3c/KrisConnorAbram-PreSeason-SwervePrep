@@ -25,8 +25,9 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotInit() {
-  Map.initialAngle = Map.gyro.getYaw();
-}
+    Map.initialAngle = Map.gyro.getYaw();
+  }
+
   @Override
   public void robotPeriodic() {}
 
@@ -40,14 +41,13 @@ public class Robot extends TimedRobot {
   public void teleopInit() {}
 
   @Override
-  public void teleopPeriodic()
-  {
+  public void teleopPeriodic() {
     x = Map.driver.getRawAxis(0);
     y = Map.driver.getRawAxis(1);
     xyHyp = 180 + (Math.atan2(y, -x) / (Math.PI) * 180);
     twist = Map.driver.getRawAxis(4);
     gyroPos = Map.gyro.getYaw();
-    Drive.strafe(Math.sqrt(x * x + y * y), (xyHyp+Map.initialAngle - gyroPos), twist - (Map.straightAngle - gyroPos) / 20);
+    DriveTrain.drive(Math.sqrt(x * x + y * y), (xyHyp+Map.initialAngle - gyroPos), twist - (Map.straightAngle - gyroPos) / 20);
 
     if (Map.driver.getRawButton(6)) {
       Map.initialAngle = gyroPos;

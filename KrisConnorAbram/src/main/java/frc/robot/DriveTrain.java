@@ -2,7 +2,7 @@ package frc.robot;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class Drive {
+public class DriveTrain {
 
     static double[] rotateVector1 = {0, 45 + 90};
     static double[] rotateVector2 = {0, 45 + 180};
@@ -19,7 +19,7 @@ public class Drive {
     static double currentAngle3;
     static double currentAngle4;
 
-    public static void strafe(double mag, double angle, double rotation) {
+    public static void drive(double mag, double angle, double rotation) {
 
         double[] strafeVector = {mag, angle};
 
