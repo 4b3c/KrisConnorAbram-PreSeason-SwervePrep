@@ -100,34 +100,34 @@ public class DriveTrain {
 
     }
 
+    // Returns a double array {distance to closest target, reverse variable}
     public static double[] elOptimal(double currentAngle, double targetAngle)
     {
         double[] diffAndReverse = {0, 1};
-
         double diff = currentAngle - targetAngle;
-        double posDiff = Math.abs(diff);
 
-        if (posDiff < 90) {
+        // If the target and current are within 90 degrees, just return the difference
+        if (diff < 90 && diff > -90) {
             diffAndReverse[0] = diff;
-
             return diffAndReverse;
         
-        } else if (posDiff < 270) {
+        // If it's more than 90 but less than 270 degrees, we return the difference to the opposite angle
+        } else if (diff < 270 && diff > -270) {
             if (diff > 0) {
                 diffAndReverse[0] = diff - 180;
                 diffAndReverse[1] = -1;
-
                 return diffAndReverse;
 
             } else {
                 diffAndReverse[0] = diff + 180;
                 diffAndReverse[1] = -1;
-
                 return diffAndReverse;
             }
         
+        // If it's more than 270 degrees, 
         } else {
             if (diff > 0) {
+<<<<<<< Updated upstream
                 diffAndReverse[0] = -diff - 360;
 
                 return diffAndReverse;
@@ -135,11 +135,16 @@ public class DriveTrain {
             } else {
                 diffAndReverse[0] = -diff + 360;
 
+=======
+                diffAndReverse[0] = diff - 360;
+                return diffAndReverse;
+
+            } else {
+                diffAndReverse[0] = diff + 360;
+>>>>>>> Stashed changes
                 return diffAndReverse;
             }
-            
         }
-
     }
 
     public static double[] addArray(double[] arr1, double[] arr2) {
