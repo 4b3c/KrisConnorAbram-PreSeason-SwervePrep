@@ -128,12 +128,12 @@ public class DriveTrain {
         
         } else {
             if (diff > 0) {
-                diffAndReverse[0] = diff + 360;
+                diffAndReverse[0] = -diff - 360;
 
                 return diffAndReverse;
 
             } else {
-                diffAndReverse[0] = diff - 360;
+                diffAndReverse[0] = -diff + 360;
 
                 return diffAndReverse;
             }
