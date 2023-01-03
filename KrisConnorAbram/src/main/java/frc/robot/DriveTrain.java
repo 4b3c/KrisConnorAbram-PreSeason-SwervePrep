@@ -127,21 +127,11 @@ public class DriveTrain {
         // If it's more than 270 degrees, 
         } else {
             if (diff > 0) {
-<<<<<<< Updated upstream
-                diffAndReverse[0] = -diff - 360;
-
-                return diffAndReverse;
-
-            } else {
-                diffAndReverse[0] = -diff + 360;
-
-=======
                 diffAndReverse[0] = diff - 360;
                 return diffAndReverse;
 
             } else {
                 diffAndReverse[0] = diff + 360;
->>>>>>> Stashed changes
                 return diffAndReverse;
             }
         }

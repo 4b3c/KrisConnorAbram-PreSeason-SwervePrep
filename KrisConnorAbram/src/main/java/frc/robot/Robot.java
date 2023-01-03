@@ -5,6 +5,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -22,6 +23,8 @@ public class Robot extends TimedRobot {
   double xyHyp;
   double twist;
   double gyroPos;
+  double lt;
+  double rt;
 
   @Override
   public void robotInit() {
@@ -52,6 +55,11 @@ public class Robot extends TimedRobot {
     if (Map.driver.getRawButton(6)) {
       Map.initialAngle = gyroPos;
     }
+
+    SmartDashboard.putBoolean("Bump Sensor", Map.bumpSensor.get());
+    lt = Map.driver.getRawAxis(2);
+    rt = Map.driver.getRawAxis(3);
+    Map.servoMotor.set(lt - rt + 0.5);
   }
 
   @Override

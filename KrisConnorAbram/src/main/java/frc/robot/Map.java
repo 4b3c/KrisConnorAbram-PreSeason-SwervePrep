@@ -7,6 +7,8 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.sensors.CANCoder;
 import com.ctre.phoenix.sensors.PigeonIMU;
 
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.XboxController;
 
 public class Map {
@@ -38,5 +40,9 @@ public class Map {
     
     public static double initialAngle = 0;
     public static double straightAngle = 0;
+
+    public static DigitalInput bumpSensor = new DigitalInput(0);
+    public static Servo servoMotor = new Servo(0);
+    
 }
 
