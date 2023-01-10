@@ -75,10 +75,10 @@ public class DriveTrain {
                 rotation = rotation + Map.deadBand;
             }
 
-            Map.drive1.set(ControlMode.PercentOutput, (driveVector1[0] * elOptimal(driveVector1[1], currentAngle1)[1])*0.5);
-            Map.drive2.set(ControlMode.PercentOutput, (driveVector2[0] * elOptimal(driveVector2[1], currentAngle2)[1])*0.5);
-            Map.drive3.set(ControlMode.PercentOutput, (driveVector3[0] * elOptimal(driveVector3[1], currentAngle3)[1])*0.5);
-            Map.drive4.set(ControlMode.PercentOutput, (driveVector4[0] * elOptimal(driveVector4[1], currentAngle4)[1])*0.5);
+            Map.drive1.set(ControlMode.PercentOutput, (driveVector1[0] * elOptimal(driveVector1[1], currentAngle1)[1]));
+            Map.drive2.set(ControlMode.PercentOutput, (driveVector2[0] * elOptimal(driveVector2[1], currentAngle2)[1]));
+            Map.drive3.set(ControlMode.PercentOutput, (driveVector3[0] * elOptimal(driveVector3[1], currentAngle3)[1]));
+            Map.drive4.set(ControlMode.PercentOutput, (driveVector4[0] * elOptimal(driveVector4[1], currentAngle4)[1]));
 
             Map.rotate1.set(ControlMode.PercentOutput, elOptimal(driveVector1[1], currentAngle1)[0] / 168.4);
             Map.rotate2.set(ControlMode.PercentOutput, elOptimal(driveVector2[1], currentAngle2)[0] / 168.4);

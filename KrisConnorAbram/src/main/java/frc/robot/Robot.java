@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -29,6 +31,16 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     Map.initialAngle = Map.gyro.getYaw();
+
+    Map.drive1.setNeutralMode(NeutralMode.Brake);
+    Map.drive2.setNeutralMode(NeutralMode.Brake);
+    Map.drive3.setNeutralMode(NeutralMode.Brake);
+    Map.drive4.setNeutralMode(NeutralMode.Brake);
+
+    Map.rotate1.setNeutralMode(NeutralMode.Brake);
+    Map.rotate2.setNeutralMode(NeutralMode.Brake);
+    Map.rotate3.setNeutralMode(NeutralMode.Brake);
+    Map.rotate4.setNeutralMode(NeutralMode.Brake);
   }
 
   @Override
@@ -45,12 +57,13 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-    x = Map.driver.getRawAxis(0);
-    y = Map.driver.getRawAxis(1);
+    x = Map.driver.getRawAxis(4);
+    y = Map.driver.getRawAxis(5);
+    twist = Map.driver.getRawAxis(0);
+
     xyHyp = 180 + (Math.atan2(y, -x) / (Math.PI) * 180);
-    twist = Map.driver.getRawAxis(4);
     gyroPos = Map.gyro.getYaw();
-    DriveTrain.drive(Math.sqrt(x * x + y * y), (xyHyp+Map.initialAngle - gyroPos), twist - (Map.straightAngle - gyroPos) / 20);
+    DriveTrain.drive(Math.sqrt(x * x + y * y), (xyHyp+Map.initialAngle - gyroPos), twist - (Map.straightAngle - gyroPos) / 40);
 
     if (Map.driver.getRawButton(6)) {
       Map.initialAngle = gyroPos;
