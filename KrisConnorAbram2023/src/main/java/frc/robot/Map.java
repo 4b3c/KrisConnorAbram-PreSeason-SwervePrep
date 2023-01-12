@@ -1,4 +1,5 @@
 //Pigeon Library: https://maven.ctr-electronics.com/release/com/ctre/phoenix/Phoenix-frc2022-latest.json
+//                https://maven.ctr-electronics.com/release/com/ctre/phoenixpro/PhoenixProAnd5-frc2023-latest.json
 //SparkMax LIbrary: https://software-metadata.revrobotics.com/REVLib.json
 
 package frc.robot;
