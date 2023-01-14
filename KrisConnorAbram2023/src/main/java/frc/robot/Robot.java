@@ -25,6 +25,8 @@ public class Robot extends TimedRobot {
   double xyHyp;
   double twist;
   double gyroPos;
+  double pitch;
+  double roll;
   double lt;
   double rt;
 
@@ -62,14 +64,33 @@ public class Robot extends TimedRobot {
     twist = Map.driver.getRawAxis(0);
 
     xyHyp = 180 + (Math.atan2(y, -x) / (Math.PI) * 180);
-    gyroPos = Map.gyro.getYaw();
-    DriveTrain.drive(Math.sqrt(x * x + y * y), (xyHyp+Map.initialAngle - gyroPos), twist - (Map.straightAngle - gyroPos) / 40);
 
+    gyroPos = Map.gyro.getYaw();
+    pitch = Map.gyro.getPitch();
+    roll = -Map.gyro.getRoll();
+
+    if (!Map.driver.getRawButton(5)) {
+      DriveTrain.drive(Math.sqrt(x * x + y * y), (xyHyp+Map.initialAngle - gyroPos), twist - (Map.straightAngle - gyroPos) / 40);
+    } else {
+      double level_mag = (pitch + roll) / 180;
+      double level_ang = 270;
+      if (level_mag > 0) {
+        level_mag += 0.09;
+      } else {
+        level_mag = -level_mag + 0.09;;
+        level_ang = 90;
+      }
+      DriveTrain.drive(level_mag, level_ang, 0);
+    }
+    
     if (Map.driver.getRawButton(6)) {
       Map.initialAngle = gyroPos;
     }
 
     SmartDashboard.putBoolean("Bump Sensor", Map.bumpSensor.get());
+    SmartDashboard.putNumber("Pitch", pitch);
+    SmartDashboard.putNumber("Roll", roll);
+
     lt = Map.driver.getRawAxis(2);
     rt = Map.driver.getRawAxis(3);
     Map.servoMotor.set(lt - rt + 0.5);

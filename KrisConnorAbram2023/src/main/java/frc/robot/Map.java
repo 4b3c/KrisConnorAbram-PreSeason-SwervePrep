@@ -1,5 +1,4 @@
-//Pigeon Library: https://maven.ctr-electronics.com/release/com/ctre/phoenix/Phoenix-frc2022-latest.json
-//                https://maven.ctr-electronics.com/release/com/ctre/phoenixpro/PhoenixProAnd5-frc2023-latest.json
+//Pigeon Library: https://maven.ctr-electronics.com/release/com/ctre/phoenixpro/PhoenixProAnd5-frc2023-latest.json
 //SparkMax LIbrary: https://software-metadata.revrobotics.com/REVLib.json
 
 package frc.robot;
@@ -37,7 +36,7 @@ public class Map {
 
     public static XboxController driver = new XboxController(0);
 
-    public static double deadBand = 0.2;
+    public static double deadBand = 0.1;
     
     public static double initialAngle = 0;
     public static double straightAngle = 0;
