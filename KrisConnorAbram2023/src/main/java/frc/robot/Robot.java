@@ -25,8 +25,7 @@ public class Robot extends TimedRobot {
   double xyHyp;
   double twist;
   double gyroPos;
-  double pitch;
-  double roll;
+  double[] balance_drive;
   double lt;
   double rt;
 
@@ -66,21 +65,23 @@ public class Robot extends TimedRobot {
     xyHyp = 180 + (Math.atan2(y, -x) / (Math.PI) * 180);
 
     gyroPos = Map.gyro.getYaw();
-    pitch = Map.gyro.getPitch();
-    roll = -Map.gyro.getRoll();
 
     if (!Map.driver.getRawButton(5)) {
       DriveTrain.drive(Math.sqrt(x * x + y * y), (xyHyp+Map.initialAngle - gyroPos), twist - (Map.straightAngle - gyroPos) / 40);
     } else {
-      double level_mag = (pitch + roll) / 180;
-      double level_ang = 270;
-      if (level_mag > 0) {
-        level_mag += 0.09;
-      } else {
-        level_mag = -level_mag + 0.09;;
-        level_ang = 90;
+      double[] pitch = {Map.gyro.getPitch() / 180, 45};
+      if (pitch[0] < 0) {
+        pitch[0] = -pitch[0];
+        pitch[1] = 225;
       }
-      DriveTrain.drive(level_mag, level_ang, 0);
+      double[] roll = {Map.gyro.getRoll() / 180, 135};
+      if (roll[0] < 0) {
+        roll[0] = -roll[0];
+        roll[1] = 315;
+      }
+      balance_drive = DriveTrain.addArray(pitch, roll);
+
+      DriveTrain.drive(balance_drive[0] + 0.09, balance_drive[1], 0);
     }
     
     if (Map.driver.getRawButton(6)) {
@@ -88,8 +89,6 @@ public class Robot extends TimedRobot {
     }
 
     SmartDashboard.putBoolean("Bump Sensor", Map.bumpSensor.get());
-    SmartDashboard.putNumber("Pitch", pitch);
-    SmartDashboard.putNumber("Roll", roll);
 
     lt = Map.driver.getRawAxis(2);
     rt = Map.driver.getRawAxis(3);
