@@ -54,13 +54,23 @@ public class Robot extends TimedRobot {
   public void autonomousPeriodic() {}
 
   @Override
-  public void teleopInit() {}
+  public void teleopInit() {
+    if (Map.driver.getPOV() != -1) {
+      Map.driver_mode[0] = 0;
+      Map.driver_mode[1] = 1;
+      Map.driver_mode[2] = 4;
+    } else {
+      Map.driver_mode[0] = 4;
+      Map.driver_mode[1] = 5;
+      Map.driver_mode[2] = 0;
+    }
+  }
 
   @Override
   public void teleopPeriodic() {
-    x = Map.driver.getRawAxis(4);
-    y = Map.driver.getRawAxis(5);
-    twist = Map.driver.getRawAxis(0);
+    x = Map.driver.getRawAxis(Map.driver_mode[0]);
+    y = Map.driver.getRawAxis(Map.driver_mode[1]);
+    twist = Map.driver.getRawAxis(Map.driver_mode[2]);
 
     xyHyp = 180 + (Math.atan2(y, -x) / (Math.PI) * 180);
 
