@@ -32,6 +32,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     Map.initialAngle = Map.gyro.getYaw();
+    Map.straightAngle = Map.gyro.getYaw();
 
     Map.drive1.setNeutralMode(NeutralMode.Brake);
     Map.drive2.setNeutralMode(NeutralMode.Brake);
@@ -79,10 +80,10 @@ public class Robot extends TimedRobot {
     if (!Map.driver.getRawButton(5)) {
       DriveTrain.drive(Math.sqrt(x * x + y * y), (xyHyp+Map.initialAngle - gyroPos), twist - (Map.straightAngle - gyroPos) / 40);
     } else {
-      double[] pitch = {Map.gyro.getPitch() / 180, 45};
+      double[] pitch = {Map.gyro.getPitch() / 180, 225};
       if (pitch[0] < 0) {
         pitch[0] = -pitch[0];
-        pitch[1] = 225;
+        pitch[1] = 45;
       }
       double[] roll = {Map.gyro.getRoll() / 180, 135};
       if (roll[0] < 0) {
