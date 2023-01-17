@@ -4,10 +4,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DriveTrain {
 
-    static double[] rotateVector1 = {0, 45 + 90};
-    static double[] rotateVector2 = {0, 45 + 180};
+    static double[] rotateVector1 = {0, 135};
+    static double[] rotateVector2 = {0, 215};
     static double[] rotateVector3 = {0, 45};
-    static double[] rotateVector4 = {0, 45 + 270};
+    static double[] rotateVector4 = {0, 315};
 
     static double[] driveVector1;
     static double[] driveVector2;
@@ -28,38 +28,49 @@ public class DriveTrain {
         currentAngle3 = Map.can3.getAbsolutePosition() - Map.offset3;
         currentAngle4 = Map.can4.getAbsolutePosition() - Map.offset4; 
 
-        if (currentAngle1<0) {
+        if (currentAngle1 < 0) {
             currentAngle1 = currentAngle1 + 360;
         }
 
-        if (currentAngle2<0) {
+        if (currentAngle2 < 0) {
             currentAngle2 = currentAngle2 + 360;
         }
 
-        if (currentAngle3<0) {
+        if (currentAngle3 < 0) {
             currentAngle3 = currentAngle3 + 360;
         }
 
-        if (currentAngle4<0) {
+        if (currentAngle4 < 0) {
             currentAngle4 = currentAngle4 + 360;
         }
 
-        rotateVector1[0] = rotation;
-        rotateVector2[0] = rotation;
-        rotateVector3[0] = rotation;
-        rotateVector4[0] = rotation;
+        if (rotation > 0) {
+            rotateVector1[0] = rotation;
+            rotateVector2[0] = rotation;
+            rotateVector3[0] = rotation;
+            rotateVector4[0] = rotation;
+        } else {
+            rotateVector1[0] = -rotation;
+            rotateVector2[0] = -rotation;
+            rotateVector3[0] = -rotation;
+            rotateVector4[0] = -rotation;
+
+            rotateVector1[1] = 315;
+            rotateVector2[1] = 45;
+            rotateVector3[1] = 215;
+            rotateVector4[1] = 135;
+     
+        }
 
         driveVector1 = addArray(strafeVector, rotateVector1);
         driveVector2 = addArray(strafeVector, rotateVector2);
         driveVector3 = addArray(strafeVector, rotateVector3);
         driveVector4 = addArray(strafeVector, rotateVector4);
 
-        SmartDashboard.putNumber("can1pos", Map.can1.getAbsolutePosition());
-        SmartDashboard.putNumber("can2pos", Map.can2.getAbsolutePosition());
-        SmartDashboard.putNumber("can3pos", Map.can3.getAbsolutePosition());
-        SmartDashboard.putNumber("can4pos", Map.can4.getAbsolutePosition());
-
-        SmartDashboard.putNumber("target1angle", angle + Map.offset1);
+        SmartDashboard.putNumber("can1pos", currentAngle1);
+        SmartDashboard.putNumber("can2pos", currentAngle2);
+        SmartDashboard.putNumber("can3pos", currentAngle3);
+        SmartDashboard.putNumber("can4pos", currentAngle4);
 
         if (Math.abs(rotation) > Map.deadBand) {
             Map.straightAngle = Map.gyro.getYaw();

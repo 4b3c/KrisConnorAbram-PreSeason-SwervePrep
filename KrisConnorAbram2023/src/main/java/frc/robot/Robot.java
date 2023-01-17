@@ -22,7 +22,7 @@ public class Robot extends TimedRobot {
    */
   double x;
   double y;
-  double xyHyp;
+  double joystickAngle;
   double twist;
   double gyroPos;
   double[] balance_drive;
@@ -73,12 +73,13 @@ public class Robot extends TimedRobot {
     y = Map.driver.getRawAxis(Map.driver_mode[1]);
     twist = Map.driver.getRawAxis(Map.driver_mode[2]);
 
-    xyHyp = 180 + (Math.atan2(y, -x) / (Math.PI) * 180);
+    joystickAngle = 180 + (Math.atan2(y, -x) / (Math.PI) * 180);
+    SmartDashboard.putNumber("Joystick Angle", joystickAngle);
 
     gyroPos = Map.gyro.getYaw();
 
     if (!Map.driver.getRawButton(5)) {
-      DriveTrain.drive(Math.sqrt(x * x + y * y), (xyHyp+Map.initialAngle - gyroPos), twist - (Map.straightAngle - gyroPos) / 40);
+      DriveTrain.drive(0.1 * Math.sqrt(x * x + y * y), (joystickAngle), twist - (Map.straightAngle - gyroPos) / 40);
     } else {
       double[] pitch = {Map.gyro.getPitch() / 180, 225};
       if (pitch[0] < 0) {
