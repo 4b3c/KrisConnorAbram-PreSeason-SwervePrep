@@ -44,23 +44,10 @@ public class DriveTrain {
             currentAngle4 = currentAngle4 + 360;
         }
 
-        if (rotation > 0) {
-            rotateVector1[0] = rotation;
-            rotateVector2[0] = rotation;
-            rotateVector3[0] = rotation;
-            rotateVector4[0] = rotation;
-        } else {
-            rotateVector1[0] = -rotation;
-            rotateVector2[0] = -rotation;
-            rotateVector3[0] = -rotation;
-            rotateVector4[0] = -rotation;
-
-            rotateVector1[1] = 315;
-            rotateVector2[1] = 45;
-            rotateVector3[1] = 215;
-            rotateVector4[1] = 135;
-     
-        }
+        rotateVector1[0] = rotation;
+        rotateVector2[0] = rotation;
+        rotateVector3[0] = rotation;
+        rotateVector4[0] = rotation;
 
         driveVector1 = addArray(strafeVector, rotateVector1);
         driveVector2 = addArray(strafeVector, rotateVector2);
@@ -72,18 +59,18 @@ public class DriveTrain {
         SmartDashboard.putNumber("can3pos", currentAngle3);
         SmartDashboard.putNumber("can4pos", currentAngle4);
 
-        if (Math.abs(rotation) > Map.deadBand) {
+        if (Math.abs(rotation) > Map.rotateDeadBand) {
             Map.straightAngle = Map.gyro.getYaw();
         }
 
-        if (mag > Map.deadBand || Math.abs(rotation) > Map.deadBand) {
+        if (mag > Map.deadBand || Math.abs(rotation) > Map.rotateDeadBand) {
             mag = mag - Map.deadBand;
 
             if (rotation > 0) {
-                rotation = rotation - Map.deadBand;
+                rotation = rotation - Map.rotateDeadBand;
 
             } else {
-                rotation = rotation + Map.deadBand;
+                rotation = rotation + Map.rotateDeadBand;
             }
 
             Map.drive1.set(ControlMode.PercentOutput, (driveVector1[0] * elOptimal(driveVector1[1], currentAngle1)[1]));
