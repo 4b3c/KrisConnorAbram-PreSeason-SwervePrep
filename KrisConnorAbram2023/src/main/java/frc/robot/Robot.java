@@ -43,6 +43,8 @@ public class Robot extends TimedRobot {
     Map.rotate2.setNeutralMode(NeutralMode.Brake);
     Map.rotate3.setNeutralMode(NeutralMode.Brake);
     Map.rotate4.setNeutralMode(NeutralMode.Brake);
+
+    Limelight.ledOff();
   }
 
   @Override
@@ -105,6 +107,16 @@ public class Robot extends TimedRobot {
     lt = Map.driver.getRawAxis(2);
     rt = Map.driver.getRawAxis(3);
     Map.servoMotor.set(lt - rt + 0.5);
+
+    if (Map.driver.getRawButtonPressed(4)) {
+      if (Map.LimelightLEDOn) {
+        Limelight.ledOff();
+        Map.LimelightLEDOn = false;
+      } else {
+        Limelight.ledOn();
+        Map.LimelightLEDOn = true;
+      }
+    }
   }
 
   @Override

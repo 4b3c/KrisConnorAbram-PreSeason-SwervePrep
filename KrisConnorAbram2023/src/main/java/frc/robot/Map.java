@@ -44,6 +44,8 @@ public class Map {
 
     public static DigitalInput bumpSensor = new DigitalInput(0);
     public static Servo servoMotor = new Servo(0);
+
+    public static Boolean LimelightLEDOn = false;
     
 }
 
