@@ -79,9 +79,20 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Joystick Angle", joystickAngle);
 
     gyroPos = Map.gyro.getYaw();
+    if(Map.driver.getRawButton(2) == true){
+      Vision.xOffset = Vision.tx.getDouble(0.0);
+    }else{
+      Vision.xOffset = 0;
+    }
+    double cancelDB =0;
+    if(Vision.tx.getDouble(0.0)<0){
+      cancelDB = -.05;
+    } else if (Vision.tx.getDouble(0.0)>0){
+      cancelDB = .05;
+    }
 
     if (!Map.driver.getRawButton(5)) {
-      DriveTrain.drive(0.1 * Math.sqrt(x * x + y * y), (joystickAngle), twist - (Map.straightAngle - gyroPos) / 40);
+      DriveTrain.drive(0.1 * Math.sqrt(x * x + y * y), (joystickAngle), (twist - (Map.straightAngle - gyroPos) / 40)+ (((Vision.xOffset)/60)+cancelDB));
     } else {
       double[] pitch = {Map.gyro.getPitch() / 180, 225};
       if (pitch[0] < 0) {
@@ -117,7 +128,21 @@ public class Robot extends TimedRobot {
         Map.LimelightLEDOn = true;
       }
     }
+    Vision.track();
+    boolean aprilPipeline = true;
+    if(Map.driver.getRawButtonPressed(1)== true){
+      if(aprilPipeline != true){
+        aprilPipeline = true;
+      }else aprilPipeline = false;
+      }
+     if(aprilPipeline == true){
+    Vision.setPipeline(0);
+  }else{
+    Vision.setPipeline(1);
   }
+}
+    
+  
 
   @Override
   public void disabledInit() {}
