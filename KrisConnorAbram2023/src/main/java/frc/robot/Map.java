@@ -46,6 +46,10 @@ public class Map {
     public static Servo servoMotor = new Servo(0);
 
     public static Boolean LimelightLEDOn = false;
+
+    public static double elapsedTime = 0;
+    public static double xOdometry = 0;
+    public static double yOdometry = 0;
     
 }
 
