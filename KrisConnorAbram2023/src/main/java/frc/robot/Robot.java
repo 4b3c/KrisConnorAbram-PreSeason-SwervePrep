@@ -128,12 +128,15 @@ public class Robot extends TimedRobot {
         Map.LimelightLEDOn = true;
       }
     }
+    //Toggle between pipilines.
     Vision.track();
     boolean aprilPipeline = true;
-    if(Map.driver.getRawButtonPressed(1)== true){
+    if(Map.driver.getRawButton(1)== true){
       if(aprilPipeline != true){
         aprilPipeline = true;
-      }else aprilPipeline = false;
+      }else if (aprilPipeline != false){ 
+        aprilPipeline= false;
+      }
       }
      if(aprilPipeline == true){
     Vision.setPipeline(0);

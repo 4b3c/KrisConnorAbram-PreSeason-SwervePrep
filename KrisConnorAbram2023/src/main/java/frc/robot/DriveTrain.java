@@ -44,23 +44,11 @@ public class DriveTrain {
             currentAngle4 = currentAngle4 + 360;
         }
 
-        if (rotation > 0) {
-            rotateVector1[0] = rotation;
-            rotateVector2[0] = rotation;
-            rotateVector3[0] = rotation;
-            rotateVector4[0] = rotation;
-        } else {
-            rotateVector1[0] = -rotation;
-            rotateVector2[0] = -rotation;
-            rotateVector3[0] = -rotation;
-            rotateVector4[0] = -rotation;
+        rotateVector1[0] = rotation;
+        rotateVector2[0] = rotation;
+        rotateVector3[0] = rotation;
+        rotateVector4[0] = rotation;
 
-            rotateVector1[1] = 315;
-            rotateVector2[1] = 45;
-            rotateVector3[1] = 215;
-            rotateVector4[1] = 135;
-     
-        }
 
         driveVector1 = addArray(strafeVector, rotateVector1);
         driveVector2 = addArray(strafeVector, rotateVector2);
