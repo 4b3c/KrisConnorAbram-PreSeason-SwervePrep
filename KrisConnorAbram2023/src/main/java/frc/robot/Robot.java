@@ -81,12 +81,22 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Joystick Angle", joystickAngle);
 
     gyroPos = Map.gyro.getYaw();
+    
+      double cancelDB =0;
     if(Map.driver.getRawButton(2) == true){
       Vision.xOffset = Vision.tx.getDouble(0.0);
+
+      if(Vision.tx.getDouble(0.0)<0){
+        cancelDB = -.05;
+      } else if (Vision.tx.getDouble(0.0)>0){
+        cancelDB = .05;
+      }
+
     }else{
       Vision.xOffset = 0;
+      cancelDB = 0;
     }
-    double cancelDB =0;
+  
     if(Vision.tx.getDouble(0.0)<0){
       cancelDB = -.05;
     } else if (Vision.tx.getDouble(0.0)>0){
@@ -135,20 +145,28 @@ public class Robot extends TimedRobot {
     //Toggle between pipilines.
     Vision.track();
     boolean aprilPipeline = true;
-    if(Map.driver.getRawButton(1)== true){
+    if(Map.driver.getRawButtonPressed(1)== true){
       if(aprilPipeline != true){
         aprilPipeline = true;
       }else if (aprilPipeline != false){ 
         aprilPipeline= false;
       }
-      }
+    /*char activated = 0;
+    int tSwitch = 0;
+    if( tSwitch == 1){
+      if(activated == 0){
+
+      }*/
+    }
+
+      
      if(aprilPipeline == true){
     Vision.setPipeline(0);
   }else{
     Vision.setPipeline(1);
   }
 }
-    
+
   
 
   @Override
