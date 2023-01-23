@@ -92,7 +92,7 @@ public class Robot extends TimedRobot {
     }
 
     if (!Map.driver.getRawButton(5)) {
-      DriveTrain.drive(Math.sqrt(x * x + y * y), (joystickAngle + Map.initialAngle - gyroPos), twist - (Map.straightAngle - gyroPos) / 40);
+      DriveTrain.drive(Math.sqrt(x * x + y * y), (joystickAngle + Map.initialAngle - gyroPos), twist - (Map.straightAngle - gyroPos) / 40 + (((Vision.xOffset)/60)+cancelDB));
     } else {
       double[] pitch = {Map.gyro.getPitch() / 180, 225};
       if (pitch[0] < 0) {
