@@ -71,9 +71,9 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-    x = Map.driver.getRawAxis(Map.driver_mode[0]);
-    y = Map.driver.getRawAxis(Map.driver_mode[1]);
-    twist = Map.driver.getRawAxis(Map.driver_mode[2]);
+    x = Map.driver.getRawAxis(Map.driver_mode[0]) / 2;
+    y = Map.driver.getRawAxis(Map.driver_mode[1]) / 2;
+    twist = Map.driver.getRawAxis(Map.driver_mode[2]) / 2;
 
     joystickAngle = 180 + (Math.atan2(y, -x) / (Math.PI) * 180);
     SmartDashboard.putNumber("Joystick Angle", joystickAngle);
@@ -92,7 +92,7 @@ public class Robot extends TimedRobot {
     }
 
     if (!Map.driver.getRawButton(5)) {
-      DriveTrain.drive(0.1 * Math.sqrt(x * x + y * y), (joystickAngle), (twist - (Map.straightAngle - gyroPos) / 40)+ (((Vision.xOffset)/60)+cancelDB));
+      DriveTrain.drive(Math.sqrt(x * x + y * y), (joystickAngle + Map.initialAngle - gyroPos), twist - (Map.straightAngle - gyroPos) / 40);
     } else {
       double[] pitch = {Map.gyro.getPitch() / 180, 225};
       if (pitch[0] < 0) {
@@ -108,6 +108,8 @@ public class Robot extends TimedRobot {
 
       DriveTrain.drive(balance_drive[0] + 0.09, balance_drive[1], 0);
     }
+
+    Odometry.calcVel(Map.initialAngle - gyroPos);
     
     if (Map.driver.getRawButton(6)) {
       Map.initialAngle = gyroPos;
