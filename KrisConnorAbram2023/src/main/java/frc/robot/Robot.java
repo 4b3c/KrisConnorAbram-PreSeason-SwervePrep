@@ -96,12 +96,6 @@ public class Robot extends TimedRobot {
       Vision.xOffset = 0;
       cancelDB = 0;
     }
-  
-    if(Vision.tx.getDouble(0.0)<0){
-      cancelDB = -.05;
-    } else if (Vision.tx.getDouble(0.0)>0){
-      cancelDB = .05;
-    }
 
     if (!Map.driver.getRawButton(5)) {
       DriveTrain.drive(Math.sqrt(x * x + y * y), (joystickAngle + Map.initialAngle - gyroPos), twist - (Map.straightAngle - gyroPos) / 40+ (((Vision.xOffset)/60)+cancelDB));
