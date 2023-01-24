@@ -51,7 +51,9 @@ public class Robot extends TimedRobot {
   public void robotPeriodic() {}
 
   @Override
-  public void autonomousInit() {}
+  public void autonomousInit() {
+    Map.elapsedTime = 0;
+  }
 
   @Override
   public void autonomousPeriodic() {
