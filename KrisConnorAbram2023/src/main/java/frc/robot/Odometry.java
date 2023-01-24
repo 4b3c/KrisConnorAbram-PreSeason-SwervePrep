@@ -53,13 +53,14 @@ public class Odometry {
         avgx = (Speed1x + Speed2x + Speed3x + Speed4x) / 4;
         avgy = (Speed1y + Speed2y + Speed3y + Speed4y) / 4;
 
-        Map.elapsedTime = Timer.getFPGATimestamp();
-        Map.xOdometry += avgx * Map.elapsedTime - cycleTime;
-        Map.yOdometry += avgy * Map.elapsedTime - cycleTime;
+        cycleTime = Timer.getFPGATimestamp() - Map.elapsedTime;
         Map.elapsedTime += cycleTime;
+        Map.xOdometry += avgx * cycleTime;
+        Map.yOdometry += avgy * cycleTime;
 
         SmartDashboard.putNumber("X pos", Map.xOdometry);
         SmartDashboard.putNumber("Y pos", Map.yOdometry);
+        SmartDashboard.putNumber("Elapsed Time", Map.elapsedTime);
 
     }
 }

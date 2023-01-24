@@ -69,6 +69,8 @@ public class Robot extends TimedRobot {
       Map.driver_mode[1] = 5;
       Map.driver_mode[2] = 0;
     }
+
+    Map.elapsedTime = 0;
   }
 
   @Override
@@ -113,6 +115,11 @@ public class Robot extends TimedRobot {
       balance_drive = DriveTrain.addArray(pitch, roll);
 
       DriveTrain.drive(balance_drive[0] + 0.09, balance_drive[1], 0);
+    }
+
+    if (Map.driver.getRawButton(3)) {
+      Map.xOdometry = 0;
+      Map.yOdometry = 0;
     }
 
     Odometry.calcVel(Map.initialAngle - gyroPos);
