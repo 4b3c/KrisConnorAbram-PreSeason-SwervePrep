@@ -138,25 +138,15 @@ public class Robot extends TimedRobot {
     }
     //Toggle between pipilines.
     Vision.track();
-    boolean aprilPipeline = true;
+    int aprilPipeline = 0;
     if(Map.driver.getRawButtonPressed(1)== true){
-      if(aprilPipeline != true){
-        aprilPipeline = true;
-      }else if (aprilPipeline != false){ 
-        aprilPipeline= false;
-      }
-    /*char activated = 0;
-    int tSwitch = 0;
-    if( tSwitch == 1){
-      if(activated == 0){
-
-      }*/
+      aprilPipeline = aprilPipeline + 1;
     }
 
       
-     if(aprilPipeline == true){
+     if(aprilPipeline %2 == 1){
     Vision.setPipeline(0);
-  }else{
+  }else if(aprilPipeline %2 ==0){
     Vision.setPipeline(1);
   }
 }
