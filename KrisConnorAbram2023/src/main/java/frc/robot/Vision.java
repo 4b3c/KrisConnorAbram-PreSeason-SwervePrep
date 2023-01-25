@@ -9,6 +9,7 @@ public class Vision {
     public static NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
 public static NetworkTableEntry tx = table.getEntry("tx");
 public static double xOffset = tx.getDouble(0.0);
+public static boolean pipelineOneOn = false; 
     public static void track (){
        
 
@@ -26,11 +27,19 @@ SmartDashboard.putNumber("LimelightY", y);
 SmartDashboard.putNumber("LimelightArea", area);
 
 }
- public static void setPipeline(int pipeline){
+ public static void pipelineOne(){
     NetworkTableEntry pipelineEntry = table.getEntry("pipeline");
-    pipelineEntry.setNumber(pipeline);
+    pipelineEntry.setNumber(1);
 
     }
+    public static void pipelineZero(){
+        NetworkTableEntry pipelineEntry = table.getEntry("pipeline");
+        pipelineEntry.setNumber(0);
+    
+        }
+
+
+
 }
 
 
