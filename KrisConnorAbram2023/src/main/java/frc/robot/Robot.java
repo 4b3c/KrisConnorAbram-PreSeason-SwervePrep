@@ -102,7 +102,7 @@ public class Robot extends TimedRobot {
     }
 
     if (!Map.driver.getRawButton(5)) {
-      DriveTrain.drive(Math.sqrt(x * x + y * y), (joystickAngle + Map.initialAngle - gyroPos), twist - (Map.straightAngle - gyroPos) / 40+ (((Vision.xOffset)/60)+cancelDB));
+      DriveTrain.drive(Math.sqrt(x * x + y * y), (joystickAngle + Map.initialAngle - gyroPos), (twist - (Map.straightAngle - gyroPos) / 40) + (((Vision.xOffset) / 60) + cancelDB));
     } else {
       double[] pitch = {Map.gyro.getPitch() / 180, 225};
       if (pitch[0] < 0) {
@@ -125,6 +125,9 @@ public class Robot extends TimedRobot {
     }
 
     Odometry.calcVel(Map.initialAngle - gyroPos);
+    if (Map.driver.getPOV() != -1) {
+      Autonomous.returnToOrigin();
+    }
     
     if (Map.driver.getRawButton(6)) {
       Map.initialAngle = gyroPos;
