@@ -16,7 +16,7 @@ public class Autonomous {
         x = Map.xOdometry;
         y = Map.yOdometry;
 
-        mag = Math.sqrt(Math.sqrt(x * x + y * y) / 20) - 0.08;
+        mag = Math.sqrt(Math.sqrt(x * x + y * y) / 18.5) - 0.08;
         if (mag > 0.45) {
             mag = 0.45;
         }

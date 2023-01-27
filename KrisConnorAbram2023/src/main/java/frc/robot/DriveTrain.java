@@ -105,12 +105,12 @@ public class DriveTrain {
         double diff = currentAngle - targetAngle;
 
         // If the target and current are within 90 degrees, just return the difference
-        if (diff < 90 && diff > -90) {
+        if (diff < 90 && diff >= -90) {
             diffAndReverse[0] = diff;
             return diffAndReverse;
         
         // If it's more than 90 but less than 270 degrees, we return the difference to the opposite angle
-        } else if (diff < 270 && diff > -270) {
+        } else if (diff <= 270 && diff >= -270) {
             if (diff > 0) {
                 diffAndReverse[0] = diff - 180;
                 diffAndReverse[1] = -1;
