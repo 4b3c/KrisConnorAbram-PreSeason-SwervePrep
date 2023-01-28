@@ -31,15 +31,12 @@ public class DriveTrain {
         if (currentAngle1 < 0) {
             currentAngle1 = currentAngle1 + 360;
         }
-
         if (currentAngle2 < 0) {
             currentAngle2 = currentAngle2 + 360;
         }
-
         if (currentAngle3 < 0) {
             currentAngle3 = currentAngle3 + 360;
         }
-
         if (currentAngle4 < 0) {
             currentAngle4 = currentAngle4 + 360;
         }
@@ -66,10 +63,10 @@ public class DriveTrain {
         if (mag > Map.deadBand || Math.abs(rotation) > Map.rotateDeadBand) {
             mag = mag - Map.deadBand;
 
-            if (rotation > 0) {
+            if (Math.abs(rotation) > Map.rotateDeadBand && rotation > 0) {
                 rotation = rotation - Map.rotateDeadBand;
 
-            } else {
+            } else if (Math.abs(rotation) > Map.rotateDeadBand && rotation < 0) {
                 rotation = rotation + Map.rotateDeadBand;
             }
 

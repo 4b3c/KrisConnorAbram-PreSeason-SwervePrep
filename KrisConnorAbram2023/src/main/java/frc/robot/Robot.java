@@ -87,16 +87,16 @@ public class Robot extends TimedRobot {
     gyroPos = Map.gyro.getYaw();
     
       double cancelDB =0;
-    if(Map.driver.getRawButton(2) == true){
+    if (Map.driver.getRawButton(2) == true) {
       Vision.xOffset = Vision.tx.getDouble(0.0);
 
-      if(Vision.tx.getDouble(0.0)<0){
+      if (Vision.tx.getDouble(0.0)<0) {
         cancelDB = -.05;
-      } else if (Vision.tx.getDouble(0.0)>0){
+      } else if (Vision.tx.getDouble(0.0)>0) {
         cancelDB = .05;
       }
 
-    }else{
+    } else {
       Vision.xOffset = 0;
       cancelDB = 0;
     }
