@@ -159,6 +159,7 @@ public class Robot extends TimedRobot {
         Vision.pipelineOneOn = true;
       }
     }
+  }
     
 }
 
