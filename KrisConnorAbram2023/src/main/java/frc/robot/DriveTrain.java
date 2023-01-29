@@ -60,9 +60,9 @@ public class DriveTrain {
         }
 
         if (mag > Map.deadBand || Math.abs(rotation) > Map.rotateDeadBand) {
-            mag = mag - Map.deadBand;
-
-            if (Math.abs(rotation) > Map.rotateDeadBand && rotation > 0) {
+            if (mag > Map.deadBand) {
+                mag = mag - Map.deadBand;
+            } else if (Math.abs(rotation) > Map.rotateDeadBand && rotation > 0) {
                 rotation = rotation - Map.rotateDeadBand;
 
             } else if (Math.abs(rotation) > Map.rotateDeadBand && rotation < 0) {
