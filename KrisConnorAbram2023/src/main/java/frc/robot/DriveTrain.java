@@ -31,15 +31,12 @@ public class DriveTrain {
         if (currentAngle1 < 0) {
             currentAngle1 = currentAngle1 + 360;
         }
-
         if (currentAngle2 < 0) {
             currentAngle2 = currentAngle2 + 360;
         }
-
         if (currentAngle3 < 0) {
             currentAngle3 = currentAngle3 + 360;
         }
-
         if (currentAngle4 < 0) {
             currentAngle4 = currentAngle4 + 360;
         }
@@ -66,10 +63,10 @@ public class DriveTrain {
         if (mag > Map.deadBand || Math.abs(rotation) > Map.rotateDeadBand) {
             mag = mag - Map.deadBand;
 
-            if (rotation > 0) {
+            if (Math.abs(rotation) > Map.rotateDeadBand && rotation > 0) {
                 rotation = rotation - Map.rotateDeadBand;
 
-            } else {
+            } else if (Math.abs(rotation) > Map.rotateDeadBand && rotation < 0) {
                 rotation = rotation + Map.rotateDeadBand;
             }
 
@@ -105,12 +102,12 @@ public class DriveTrain {
         double diff = currentAngle - targetAngle;
 
         // If the target and current are within 90 degrees, just return the difference
-        if (diff < 90 && diff > -90) {
+        if (diff < 90 && diff >= -90) {
             diffAndReverse[0] = diff;
             return diffAndReverse;
         
         // If it's more than 90 but less than 270 degrees, we return the difference to the opposite angle
-        } else if (diff < 270 && diff > -270) {
+        } else if (diff <= 270 && diff >= -270) {
             if (diff > 0) {
                 diffAndReverse[0] = diff - 180;
                 diffAndReverse[1] = -1;

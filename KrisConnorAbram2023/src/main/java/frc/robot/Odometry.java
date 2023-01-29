@@ -41,6 +41,16 @@ public class Odometry {
         currentSpeed3 = Map.drive3.getSelectedSensorVelocity() / 417.72;
         currentSpeed4 = Map.drive4.getSelectedSensorVelocity() / 417.72;
 
+        if (currentSpeed1 < 0) {currentSpeed1 = -currentSpeed1; currentAngle1 = currentAngle1 + 180;}
+        if (currentSpeed2 < 0) {currentSpeed2 = -currentSpeed2; currentAngle2 = currentAngle2 + 180;}
+        if (currentSpeed3 < 0) {currentSpeed3 = -currentSpeed3; currentAngle3 = currentAngle3 + 180;}
+        if (currentSpeed4 < 0) {currentSpeed4 = -currentSpeed4; currentAngle4 = currentAngle4 + 180;}
+
+        SmartDashboard.putNumber("after 1", currentSpeed1);
+        SmartDashboard.putNumber("after 2", currentSpeed2);
+        SmartDashboard.putNumber("after 3", currentSpeed3);
+        SmartDashboard.putNumber("after 4", currentSpeed4);
+
         Speed1x = Math.cos(DriveTrain.toRadians(currentAngle1)) * currentSpeed1;
         Speed1y = Math.sin(DriveTrain.toRadians(currentAngle1)) * currentSpeed1;
         Speed2x = Math.cos(DriveTrain.toRadians(currentAngle2)) * currentSpeed2;
@@ -61,6 +71,11 @@ public class Odometry {
         SmartDashboard.putNumber("X pos", Map.xOdometry);
         SmartDashboard.putNumber("Y pos", Map.yOdometry);
         SmartDashboard.putNumber("Elapsed Time", Map.elapsedTime);
+
+        SmartDashboard.putNumber("angle 1", Speed1x);
+        SmartDashboard.putNumber("angle 2", Speed2x);
+        SmartDashboard.putNumber("angle 3", Speed3x);
+        SmartDashboard.putNumber("angle 4", Speed4x);
 
     }
 }

@@ -16,11 +16,11 @@ public class Autonomous {
         x = Map.xOdometry;
         y = Map.yOdometry;
 
-        mag = Math.sqrt(Math.sqrt(x * x + y * y) / 10000) - 0.08;
-        if (mag > 0.4) {
-            mag = 0.4;
+        mag = Math.sqrt(Math.sqrt(x * x + y * y) / 10) - 0.08;
+        if (mag > 0.45) {
+            mag = 0.45;
         }
-        angle = 180 + (Math.atan2(y, x) / (Math.PI) * 180);
+        angle = (Map.initialAngle - gyroPos) + 180 + (Math.atan2(y, x) / (Math.PI) * 180);
         DriveTrain.drive(mag, angle, rotation);
 
         SmartDashboard.putNumber("Mag", mag);
