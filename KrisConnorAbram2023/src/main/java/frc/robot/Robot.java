@@ -90,9 +90,9 @@ public class Robot extends TimedRobot {
       Vision.xOffset = Vision.tx.getDouble(0.0);
     
       if(Vision.tx.getDouble(0.0)<0){
-        cancelDB = -.04;
+        cancelDB = -.0;
       } else if (Vision.tx.getDouble(0.0)>0){
-        cancelDB = .04;
+        cancelDB = .0;
       }
 
     } else {
@@ -101,7 +101,7 @@ public class Robot extends TimedRobot {
     }
 
     if (!Map.driver.getRawButton(5)) {
-      DriveTrain.drive(Math.sqrt(x * x + y * y), (joystickAngle + Map.initialAngle - gyroPos), twist - (Map.straightAngle - gyroPos) / 40+ ((Vision.vPid.calculate(Vision.xOffset))+cancelDB));
+      DriveTrain.drive(Math.sqrt(x * x + y * y), (joystickAngle + Map.initialAngle - gyroPos), twist - (Map.straightAngle - gyroPos) / 40+ ((Vision.vPid.calculate( (Vision.xOffset ) ))+cancelDB));
     if (Map.driver.getPOV() != -1) {
       Autonomous.returnToOrigin();
     } else if (!Map.driver.getRawButton(5)) {
