@@ -82,9 +82,8 @@ public class Robot extends TimedRobot {
     twist = Map.driver.getRawAxis(Map.driver_mode[2]) / 2;
 
     joystickAngle = 180 + (Math.atan2(y, -x) / (Math.PI) * 180);
-    SmartDashboard.putNumber("Joystick Angle", joystickAngle);
-
     gyroPos = Map.gyro.getYaw();
+    SmartDashboard.putNumber("Bot Angle", gyroPos);
     
       double cancelDB =0;
     if (Map.driver.getRawButton(2) == true) {
@@ -128,7 +127,7 @@ public class Robot extends TimedRobot {
       Map.yOdometry = 0;
     }
 
-    Odometry.calcVel(Map.initialAngle - gyroPos);
+    Odometry.calcVel(gyroPos);
     
     if (Map.driver.getRawButton(6)) {
       Map.initialAngle = gyroPos;

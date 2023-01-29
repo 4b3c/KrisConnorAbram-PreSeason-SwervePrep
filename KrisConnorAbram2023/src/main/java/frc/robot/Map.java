@@ -27,9 +27,14 @@ public class Map {
     public static CANCoder can4 = new CANCoder(12);
 
     public static double offset1 = 116.7 + 90;
-    public static double offset2 = 15.4 + 90;
+    public static double offset2 = 6.4 + 90;
     public static double offset3 = 200.1 + 90;
     public static double offset4 = 238.7 + 90;
+
+    public static double driveDir1 = 1;
+    public static double driveDir2 = 1;
+    public static double driveDir3 = 1;
+    public static double driveDir4 = 1;
 
     public static PigeonIMU gyro = new PigeonIMU(0);
 

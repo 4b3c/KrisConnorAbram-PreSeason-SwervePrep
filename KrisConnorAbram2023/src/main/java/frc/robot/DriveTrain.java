@@ -1,11 +1,10 @@
 package frc.robot;
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DriveTrain {
 
     static double[] rotateVector1 = {0, 135};
-    static double[] rotateVector2 = {0, 215};
+    static double[] rotateVector2 = {0, 225};
     static double[] rotateVector3 = {0, 45};
     static double[] rotateVector4 = {0, 315};
 
@@ -18,6 +17,11 @@ public class DriveTrain {
     static double currentAngle2;
     static double currentAngle3;
     static double currentAngle4;
+
+    static double[] optimal1;
+    static double[] optimal2;
+    static double[] optimal3;
+    static double[] optimal4;
 
     public static void drive(double mag, double angle, double rotation) {
 
@@ -51,11 +55,6 @@ public class DriveTrain {
         driveVector3 = addArray(strafeVector, rotateVector3);
         driveVector4 = addArray(strafeVector, rotateVector4);
 
-        SmartDashboard.putNumber("can1pos", currentAngle1);
-        SmartDashboard.putNumber("can2pos", currentAngle2);
-        SmartDashboard.putNumber("can3pos", currentAngle3);
-        SmartDashboard.putNumber("can4pos", currentAngle4);
-
         if (Math.abs(rotation) > Map.rotateDeadBand) {
             Map.straightAngle = Map.gyro.getYaw();
         }
@@ -70,15 +69,25 @@ public class DriveTrain {
                 rotation = rotation + Map.rotateDeadBand;
             }
 
-            Map.drive1.set(ControlMode.PercentOutput, (driveVector1[0] * elOptimal(driveVector1[1], currentAngle1)[1]));
-            Map.drive2.set(ControlMode.PercentOutput, (driveVector2[0] * elOptimal(driveVector2[1], currentAngle2)[1]));
-            Map.drive3.set(ControlMode.PercentOutput, (driveVector3[0] * elOptimal(driveVector3[1], currentAngle3)[1]));
-            Map.drive4.set(ControlMode.PercentOutput, (driveVector4[0] * elOptimal(driveVector4[1], currentAngle4)[1]));
+            optimal1 = elOptimal(driveVector1[1], currentAngle1);
+            optimal2 = elOptimal(driveVector2[1], currentAngle2);
+            optimal3 = elOptimal(driveVector3[1], currentAngle3);
+            optimal4 = elOptimal(driveVector4[1], currentAngle4);
 
-            Map.rotate1.set(ControlMode.PercentOutput, elOptimal(driveVector1[1], currentAngle1)[0] / 168.4);
-            Map.rotate2.set(ControlMode.PercentOutput, elOptimal(driveVector2[1], currentAngle2)[0] / 168.4);
-            Map.rotate3.set(ControlMode.PercentOutput, elOptimal(driveVector3[1], currentAngle3)[0] / 168.4);
-            Map.rotate4.set(ControlMode.PercentOutput, elOptimal(driveVector4[1], currentAngle4)[0] / 168.4);
+            Map.driveDir1 = optimal1[1];
+            Map.driveDir2 = optimal2[1];
+            Map.driveDir3 = optimal3[1];
+            Map.driveDir4 = optimal4[1];
+
+            Map.drive1.set(ControlMode.PercentOutput, (driveVector1[0] * optimal1[1]));
+            Map.drive2.set(ControlMode.PercentOutput, (driveVector2[0] * optimal2[1]));
+            Map.drive3.set(ControlMode.PercentOutput, (driveVector3[0] * optimal3[1]));
+            Map.drive4.set(ControlMode.PercentOutput, (driveVector4[0] * optimal4[1]));
+
+            Map.rotate1.set(ControlMode.PercentOutput, optimal1[0] / 161.4);
+            Map.rotate2.set(ControlMode.PercentOutput, optimal2[0] / 161.4);
+            Map.rotate3.set(ControlMode.PercentOutput, optimal3[0] / 161.4);
+            Map.rotate4.set(ControlMode.PercentOutput, optimal4[0] / 161.4);
             
         } else {
             Map.drive1.set(ControlMode.PercentOutput, 0);

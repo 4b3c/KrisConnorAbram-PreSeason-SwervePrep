@@ -30,26 +30,23 @@ public class Odometry {
 
     static double cycleTime;
 
+    static double changex;
+    static double changey;
+
+    static double angleDiff;
+
     public static void calcVel(double gyroAngle) {
-        currentAngle1 = Map.can1.getAbsolutePosition() - Map.offset1 - gyroAngle;
-        currentAngle2 = Map.can2.getAbsolutePosition() - Map.offset2 - gyroAngle;
-        currentAngle3 = Map.can3.getAbsolutePosition() - Map.offset3 - gyroAngle;
-        currentAngle4 = Map.can4.getAbsolutePosition() - Map.offset4 - gyroAngle;
+        angleDiff = gyroAngle - Map.initialAngle;
+
+        currentAngle1 = Map.can1.getAbsolutePosition() - Map.offset1 - angleDiff;
+        currentAngle2 = Map.can2.getAbsolutePosition() - Map.offset2 - angleDiff;
+        currentAngle3 = Map.can3.getAbsolutePosition() - Map.offset3 - angleDiff;
+        currentAngle4 = Map.can4.getAbsolutePosition() - Map.offset4 - angleDiff;
 
         currentSpeed1 = Map.drive1.getSelectedSensorVelocity() / 417.72;
         currentSpeed2 = Map.drive2.getSelectedSensorVelocity() / 417.72;
         currentSpeed3 = Map.drive3.getSelectedSensorVelocity() / 417.72;
         currentSpeed4 = Map.drive4.getSelectedSensorVelocity() / 417.72;
-
-        if (currentSpeed1 < 0) {currentSpeed1 = -currentSpeed1; currentAngle1 = currentAngle1 + 180;}
-        if (currentSpeed2 < 0) {currentSpeed2 = -currentSpeed2; currentAngle2 = currentAngle2 + 180;}
-        if (currentSpeed3 < 0) {currentSpeed3 = -currentSpeed3; currentAngle3 = currentAngle3 + 180;}
-        if (currentSpeed4 < 0) {currentSpeed4 = -currentSpeed4; currentAngle4 = currentAngle4 + 180;}
-
-        SmartDashboard.putNumber("after 1", currentSpeed1);
-        SmartDashboard.putNumber("after 2", currentSpeed2);
-        SmartDashboard.putNumber("after 3", currentSpeed3);
-        SmartDashboard.putNumber("after 4", currentSpeed4);
 
         Speed1x = Math.cos(DriveTrain.toRadians(currentAngle1)) * currentSpeed1;
         Speed1y = Math.sin(DriveTrain.toRadians(currentAngle1)) * currentSpeed1;
@@ -62,20 +59,22 @@ public class Odometry {
 
         avgx = (Speed1x + Speed2x + Speed3x + Speed4x) / 4;
         avgy = (Speed1y + Speed2y + Speed3y + Speed4y) / 4;
+        changex = (Math.sin(DriveTrain.toRadians(angleDiff)) + Math.cos(DriveTrain.toRadians(angleDiff)) - 1) * 1.66;
+        changey = (Math.sin(DriveTrain.toRadians(angleDiff + 90)) + Math.cos(DriveTrain.toRadians(angleDiff + 90)) - 1) * 1.6;
 
         cycleTime = Timer.getFPGATimestamp() - Map.elapsedTime;
         Map.elapsedTime += cycleTime;
         Map.xOdometry += avgx * cycleTime;
         Map.yOdometry += avgy * cycleTime;
 
-        SmartDashboard.putNumber("X pos", Map.xOdometry);
-        SmartDashboard.putNumber("Y pos", Map.yOdometry);
+        SmartDashboard.putNumber("X pos", Map.xOdometry + changex);
+        SmartDashboard.putNumber("Y pos", Map.yOdometry + changey);
         SmartDashboard.putNumber("Elapsed Time", Map.elapsedTime);
 
-        SmartDashboard.putNumber("angle 1", Speed1x);
-        SmartDashboard.putNumber("angle 2", Speed2x);
-        SmartDashboard.putNumber("angle 3", Speed3x);
-        SmartDashboard.putNumber("angle 4", Speed4x);
+        SmartDashboard.putNumber("angle", (angleDiff));
+        SmartDashboard.putNumber("changex", changex);
+        SmartDashboard.putNumber("changey", changey);
+
 
     }
 }
