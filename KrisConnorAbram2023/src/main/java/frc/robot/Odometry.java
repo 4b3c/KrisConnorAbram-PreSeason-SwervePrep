@@ -30,9 +30,6 @@ public class Odometry {
 
     static double cycleTime;
 
-    static double changex;
-    static double changey;
-
     static double angleDiff;
 
     public static void calcVel(double gyroAngle) {
@@ -59,21 +56,17 @@ public class Odometry {
 
         avgx = (Speed1x + Speed2x + Speed3x + Speed4x) / 4;
         avgy = (Speed1y + Speed2y + Speed3y + Speed4y) / 4;
-        changex = (Math.sin(DriveTrain.toRadians(angleDiff)) + Math.cos(DriveTrain.toRadians(angleDiff)) - 1) * 1.67;
-        changey = (Math.sin(DriveTrain.toRadians(angleDiff + 90)) + Math.cos(DriveTrain.toRadians(angleDiff + 90)) - 1) * 1.59;
+        Map.xchange = (Math.sin(DriveTrain.toRadians(angleDiff)) + Math.cos(DriveTrain.toRadians(angleDiff)) - 1) * 1.67;
+        Map.ychange = (Math.sin(DriveTrain.toRadians(angleDiff + 90)) + Math.cos(DriveTrain.toRadians(angleDiff + 90)) - 1) * 1.59;
 
         cycleTime = Timer.getFPGATimestamp() - Map.elapsedTime;
         Map.elapsedTime += cycleTime;
         Map.xOdometry += avgx * cycleTime;
         Map.yOdometry += avgy * cycleTime;
 
-        SmartDashboard.putNumber("X pos", Map.xOdometry + changex);
-        SmartDashboard.putNumber("Y pos", Map.yOdometry + changey);
+        SmartDashboard.putNumber("X pos", Map.xOdometry + Map.xchange);
+        SmartDashboard.putNumber("Y pos", Map.yOdometry + Map.xchange);
         SmartDashboard.putNumber("Elapsed Time", Map.elapsedTime);
-
-        SmartDashboard.putNumber("angle", (angleDiff));
-        SmartDashboard.putNumber("changex", changex);
-        SmartDashboard.putNumber("changey", changey);
 
 
     }
