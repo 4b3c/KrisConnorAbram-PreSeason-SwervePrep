@@ -90,9 +90,9 @@ public class Robot extends TimedRobot {
       Vision.xOffset = Vision.tx.getDouble(0.0);
     
       if(Vision.tx.getDouble(0.0)<0){
-        cancelDB = -.04;
+        cancelDB = -.0;
       } else if (Vision.tx.getDouble(0.0)>0){
-        cancelDB = .04;
+        cancelDB = .0;
       }
 
     } else {

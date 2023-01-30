@@ -19,7 +19,7 @@ public static boolean pipelineOneOn = false;
    
     // change pid vlaues here
     
-    public static PIDController vPid = new PIDController(40, 0, 0);
+    public static PIDController vPid = new PIDController(0.0000000001, 0, -.000000001);
    
  public static void pipelineOne(){
     NetworkTableEntry pipelineEntry = table.getEntry("pipeline");
