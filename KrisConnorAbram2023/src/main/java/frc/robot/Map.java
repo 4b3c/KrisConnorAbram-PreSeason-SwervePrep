@@ -55,7 +55,6 @@ public class Map {
     public static double elapsedTime = 0;
     public static double xOdometry = 0;
     public static double yOdometry = 0;
-    public static double xchange = 0;
-    public static double ychange = 0;
+    public static double[] change = {0, 0};
   }
 

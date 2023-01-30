@@ -12,6 +12,22 @@ public class Autonomous {
 
     static double gyroPos;
 
+    public static double[] twistAngCoords(double angle) {
+        double[] coords = {0, 0};
+        coords[0] = (Math.sin(DriveTrain.toRadians(angle + 90)) + Math.cos(DriveTrain.toRadians(angle + 90)) - 1) * 1.6;
+        coords[1] = (Math.sin(DriveTrain.toRadians(angle)) + Math.cos(DriveTrain.toRadians(angle)) - 1) * 1.6;
+
+        return coords;
+    }
+
+    public static double twistCoordsAng(double[] coords) {
+        angle = DriveTrain.toDegrees(Math.atan2(coords[1] + 1.6, coords[0] + 1.6));
+	    if (angle < 0) {
+            return angle + 360;
+        }
+	    return angle;
+    }
+
     public static void returnToOrigin() {
         x = Map.xOdometry;
         y = Map.yOdometry;
@@ -21,6 +37,7 @@ public class Autonomous {
             mag = 0.45;
         }
         angle = (Map.initialAngle - gyroPos) + 180 + (Math.atan2(y, x) / (Math.PI) * 180);
+        rotation = twistCoordsAng(Map.change) / 720;
         DriveTrain.drive(mag, angle, rotation);
 
         SmartDashboard.putNumber("Mag", mag);

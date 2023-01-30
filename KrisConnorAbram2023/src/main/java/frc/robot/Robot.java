@@ -62,7 +62,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    if (Map.driver.getPOV() != -1) {
+    if (Map.driver.getPOV() == -1) {
       Map.driver_mode[0] = 0;
       Map.driver_mode[1] = 1;
       Map.driver_mode[2] = 4;
@@ -100,12 +100,10 @@ public class Robot extends TimedRobot {
       cancelDB = 0;
     }
 
-    if (!Map.driver.getRawButton(5)) {
-      DriveTrain.drive(Math.sqrt(x * x + y * y), (joystickAngle + Map.initialAngle - gyroPos), twist - (Map.straightAngle - gyroPos) / 40+ ((Vision.vPid.calculate(Vision.xOffset))+cancelDB));
     if (Map.driver.getPOV() != -1) {
       Autonomous.returnToOrigin();
     } else if (!Map.driver.getRawButton(5)) {
-      DriveTrain.drive(Math.sqrt(x * x + y * y), (joystickAngle + Map.initialAngle - gyroPos), (twist - (Map.straightAngle - gyroPos) / 40) + (((Vision.xOffset) / 60) + cancelDB));
+      DriveTrain.drive(Math.sqrt(x * x + y * y), (joystickAngle + Map.initialAngle - gyroPos), twist - (Map.straightAngle - gyroPos) / 40 + ((Vision.vPid.calculate(Vision.xOffset)) + cancelDB));
     } else {
       double[] pitch = {Map.gyro.getPitch() / 180, 225};
       if (pitch[0] < 0) {
@@ -159,7 +157,7 @@ public class Robot extends TimedRobot {
         Vision.pipelineOneOn = true;
       }
     }
-  }
+  // }
     
 }
 

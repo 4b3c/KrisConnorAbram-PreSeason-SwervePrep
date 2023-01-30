@@ -56,17 +56,23 @@ public class Odometry {
 
         avgx = (Speed1x + Speed2x + Speed3x + Speed4x) / 4;
         avgy = (Speed1y + Speed2y + Speed3y + Speed4y) / 4;
-        Map.xchange = (Math.sin(DriveTrain.toRadians(angleDiff)) + Math.cos(DriveTrain.toRadians(angleDiff)) - 1) * 1.67;
-        Map.ychange = (Math.sin(DriveTrain.toRadians(angleDiff + 90)) + Math.cos(DriveTrain.toRadians(angleDiff + 90)) - 1) * 1.59;
+        Map.change[0] = (Math.sin(DriveTrain.toRadians(angleDiff)) + Math.cos(DriveTrain.toRadians(angleDiff)) - 1) * 1.6;
+        Map.change[1] = (Math.sin(DriveTrain.toRadians(angleDiff + 90)) + Math.cos(DriveTrain.toRadians(angleDiff + 90)) - 1) * 1.6;
 
         cycleTime = Timer.getFPGATimestamp() - Map.elapsedTime;
         Map.elapsedTime += cycleTime;
         Map.xOdometry += avgx * cycleTime;
         Map.yOdometry += avgy * cycleTime;
 
-        SmartDashboard.putNumber("X pos", Map.xOdometry + Map.xchange);
-        SmartDashboard.putNumber("Y pos", Map.yOdometry + Map.xchange);
+        SmartDashboard.putNumber("X pos", Map.xOdometry + Map.change[0]);
+        SmartDashboard.putNumber("Y pos", Map.yOdometry + Map.change[1]);
         SmartDashboard.putNumber("Elapsed Time", Map.elapsedTime);
+
+        SmartDashboard.putNumber("angle", angleDiff);
+        SmartDashboard.putNumber("x change", Map.change[0]);
+        SmartDashboard.putNumber("y change", Map.change[1]);
+        SmartDashboard.putNumber("x odometry", Map.xOdometry);
+        SmartDashboard.putNumber("y odometry", Map.yOdometry);
 
 
     }

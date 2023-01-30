@@ -64,7 +64,6 @@ public class DriveTrain {
                 mag = mag - Map.deadBand;
             } else if (Math.abs(rotation) > Map.rotateDeadBand && rotation > 0) {
                 rotation = rotation - Map.rotateDeadBand;
-
             } else if (Math.abs(rotation) > Map.rotateDeadBand && rotation < 0) {
                 rotation = rotation + Map.rotateDeadBand;
             }
