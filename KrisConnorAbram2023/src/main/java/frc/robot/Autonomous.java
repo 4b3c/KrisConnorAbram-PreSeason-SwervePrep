@@ -36,7 +36,7 @@ public class Autonomous {
         if (mag > 0.45) {
             mag = 0.45;
         }
-        angle = (Map.initialAngle - gyroPos) + 180 + (Math.atan2(y, x) / (Math.PI) * 180);
+        angle = (Map.initialAngle - gyroPos) + (Math.atan2(y, x) / (Math.PI) * 180);
         rotation = twistCoordsAng(Map.change) / 720;
         DriveTrain.drive(mag, angle, rotation);
 
